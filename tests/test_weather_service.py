@@ -117,3 +117,5 @@ def test_create_temperature_chart():
 
     assert "<div" in chart_html
     assert "Temperaturprognos" in chart_html
+    assert "H\\u00f6gsta" in chart_html or "Högsta" in chart_html
+    assert "L\\u00e4gsta" in chart_html or "Lägsta" in chart_html

@@ -83,10 +83,11 @@ def create_temperature_chart(days):
         return ""
 
     df = pd.DataFrame(days)
+    df = df.rename(columns={"temp_max": "Högsta", "temp_min": "Lägsta"})
     fig = px.line(
         df,
         x="date",
-        y=["temp_max", "temp_min"],
+        y=["Högsta", "Lägsta"],
         labels={
             "date": "Datum",
             "value": "Temperatur (°C)",
