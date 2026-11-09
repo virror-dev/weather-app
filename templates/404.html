@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="text-center py-5">
+    <h1 class="display-4">404</h1>
+    <p class="lead">Sidan du letar efter kunde inte hittas.</p>
+    <a href="{{ url_for('index') }}" class="btn btn-primary">Gå till startsidan</a>
+</div>
+{% endblock %}

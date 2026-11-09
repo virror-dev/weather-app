@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+
+{% block content %}
+    {% if error %}
+        <div class="alert alert-danger" role="alert">
+            <h2 class="h5">Ett fel uppstod</h2>
+            <p class="mb-0">{{ error }}</p>
+        </div>
+        <a href="{{ url_for('index') }}" class="btn btn-secondary">Tillbaka till startsidan</a>
+    {% else %}
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h1 class="h3 mb-0">Väder i {{ city }}</h1>
+            <a href="{{ url_for('index') }}" class="btn btn-outline-primary btn-sm">Byt stad</a>
+        </div>
+
+        <div class="row mb-4">
+            <div class="col-md-6 mb-3 mb-md-0">
+                <div class="card shadow-sm h-100">
+                    <div class="card-body">
+                        <h2 class="h5">Just nu</h2>
+                        <p class="mb-1">Temperatur: <strong>{{ current.temperature | format_temp }}</strong></p>
+                        <p class="mb-0">Vindstyrka: <strong>{{ current.wind_speed }} m/s</strong></p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card shadow-sm h-100">
+                    <div class="card-body">
+                        <h2 class="h5">Sammanfattning (3 dagar)</h2>
+                        <p class="mb-0">
+                            Medelvärde högsta temperatur: <strong>{{ avg_max_temp | format_temp }}</strong>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card shadow-sm mb-4">
+            <div class="card-body">
+                <h2 class="h5 mb-3">Prognos för 3 dagar</h2>
+                <table class="table table-striped mb-0">
+                    <thead>
+                        <tr>
+                            <th>Datum</th>
+                            <th>Högsta temp</th>
+                            <th>Lägsta temp</th>
+                            <th>Nederbörd</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for day in days %}
+                        <tr>
+                            <td>{{ day.date }}</td>
+                            <td>{{ day.temp_max | format_temp }}</td>
+                            <td>{{ day.temp_min | format_temp }}</td>
+                            <td>{{ day.precipitation }} mm</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        {% if chart_html %}
+        <div class="card shadow-sm">
+            <div class="card-body">
+                {{ chart_html | safe }}
+            </div>
+        </div>
+        {% endif %}
+    {% endif %}
+{% endblock %}
